@@ -51,7 +51,7 @@ void push(struct Stack* stack, int data) {
 int pop(struct Stack* stack) {
     if (isEmpty(stack)) {
         printf("Stack Underflow\n");
-        return -1;
+        return NULL;
     } else {
         stack->top--;
         return stack->array[stack->top + 1];
