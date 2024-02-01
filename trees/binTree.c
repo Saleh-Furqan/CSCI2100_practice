@@ -129,12 +129,28 @@ struct Node* treeMinimum(struct Node* x) {
     return x;
 }
 
+// Function that returns minimum key in tree (recursive)
+struct Node* treeMinimumRecursice(struct Node* x) {
+    if (x->left == NULL) {
+        return x;
+    }
+    return treeMinimumRecursice(x->left);
+}
+
 // Function that returns maximum key in tree
 struct Node* treeMaximum(struct Node* x) {
     while (x->right != NULL) {
         x = x->right;
     }
     return x;
+}
+
+// Function that returns maximum key in tree (recursive)
+struct Node* treeMaximumRecursive(struct Node* x) {
+    if (x->right == NULL) {
+        return x;
+    }
+    return treeMaximumRecursive(x->right);
 }
 
 // Function that returns successor of node x
@@ -149,5 +165,41 @@ struct Node* treeSuccessor(struct Node* x) {
         }
         return y;
 
+    }
+}
+
+// Function that returns predecessor of node x 
+struct Node* treePredecessor(struct Node* x) {
+    if (x->left != NULL) {
+        return treeMaximum(x->left);
+    } else {
+        struct Node* y = x->parent;
+        while (y != NULL && x == y->left) {
+            x = y;
+            y = y->parent;
+        }
+        return y;
+    }
+}
+
+// Function that inserts node z into tree 
+void treeInsert(struct Node** root, struct Node* z) {
+    struct Node* y = NULL;
+    struct Node* x = (*root);
+    while (x != NULL) {
+        y = x;
+        if (z->data < x->data) {
+            x = x->left;
+        } else {
+            x = x->right;
+        }
+    }
+    z->parent = y;
+    if (y == NULL) {
+        (*root) = z;
+    } else if (z->data < y->data) {
+        y->left = z;
+    } else {
+        y->right = z;
     }
 }
